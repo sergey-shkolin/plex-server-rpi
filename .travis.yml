@@ -1,22 +1,28 @@
 sudo: required
 
 services:
-  - 'docker'
+- docker
 
 install: true
 
+env:
+  global:
+  - secure: atYe99qrzekcRi7FqFvjo2jW683Ws9BuMHHpM4sPfeapBv4xJI++FweVHDBLAhbgZn5QmZmTvQ4bqQck17tkrvXodB3Evsjq7/1+Yj/e0Q39LJZeJwvKoFrsZE1GnfXSFM3omJvwtPHhgz1sUsYxPzyX0le+iQSkSsjqGppfUK7SGXZUn8lbNPgucA0k2Al7zreVLCLCOW1z7ORUGA1E4gzlP9UG4S95+enlUi2TWFVQu509J2QEQdT+v6BHHSb6F8i62VEbmdIou9jdR8ib7pQj+2Y8fd9umUekeczgm9lHF0OfD5jgc6fgPYcJcv9Ls5eJaQfVbs+8p8haut0SJpwp49KwREM7hYcYJMgPJEWLty6fuUI6x+ZgxoRLD6OdOeM1pnXLSUkExedni4duhTR+aXl5vPTTGm5Emdzl3rt+0++0EBZZAUHMb9kb01dcZipYx6rcAHmo9fhXhdYr3N3pBhwRDaZQlCZSc3QqYRE3udb4tXLDvbeyvuMR5CAW/9lfdY9vK2sLTrUHqZPn6g7pNErtz9bGcKsEcQ/x0kvF/18EF3PgS9wjcjoy68HeO4XNYtPGUpJ3+jyyRcCrRWmm766bzjkxxzUmMHpwDIvL1RXiEPshGLLbvNxcLXDr9ZomZ1NgiRXwt/9dVm2tI7yp7TluxjV7eb6abLQYIs8=
+  - secure: bqE3qfrL3jY7GljRrZ7msRogzkXZe0Awp4NsAcjArvpts3RlKHPTvUuLS86Sm5RFHl6EzvBhvx4l9a6OT5UYIJLhjhDvkq5kdgaOaGRhPF40FNG97EtWehrHW+UkRcZBkrUeE+PNtzca3fJWG6B0lWw2HBGhva4gVo+ChcqD8CeCDMmvF1YnEpb8wz0wtr0w8FiHcEtgoRYv7A0zmgryhzTKGWQ2bXy3Rb+jDAePQJz/Weg4+a2gr7vTIcr17vk55Xjz/Cqi7+MERqTyJLX05n5Idgd63P5sXHoaLjfMjxufB4po+uXL8u7RPbr3vmgQF5gtAFCqUSxQOt7akoBgBu86keUpxV+OECEA0FFF8lC07gH1u6OUkA1FURDBrejafVWLn0H2a4Tr/RRMDWDhLeKvV4skX3X5l/ORe9b+Zr9neSAOz+E2IgnqyvgktRd4cEepzJNeclASddrfqLT0lbJSlkZdh4wGEPdu+X2jiI2uDmWpmXM3rZc3rlNEgoGYKpR/o2blHrz4ZQYni+Uq96I/I+z1azZmuzviyF0W4YcVzlhrzG13t/1CYHKDdFGYUWD1GLcSdO4EFmp6S7/5UPWEz9toay2Vwk7R6HYcBbaVRpiKkaiXGrlTA0QhqLrxL9Y/w3PH2dnYwV1v4jMHZHyeiZWusrITMHpB7xy8GnY=
+
 before_script:
-  - sudo apt-get --yes --no-install-recommends install binfmt-support qemu-user-static
-  - echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:' | sudo tee -a /proc/sys/fs/binfmt_misc/register
+- sudo apt-get --yes --no-install-recommends install binfmt-support qemu-user-static
+- echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:'
+  | sudo tee -a /proc/sys/fs/binfmt_misc/register
 
 script:
-  - 'make build'
+- make build
 
-# after_success:
-#   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-#       docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-#       make push ;
-#     fi
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+      make push ;
+    fi
 
 notifications:
   email: true
