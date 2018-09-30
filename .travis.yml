@@ -1,5 +1,8 @@
 sudo: 'true'
 
+env:
+  - ARCH=arm
+
 services:
   - 'docker'
 
