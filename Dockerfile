@@ -9,7 +9,7 @@ RUN apt-get update \
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen \
  && locale-gen
 
-ENV PLEX_VERSION=1.13.8.5395-10d48da0d 
+ENV PLEX_VERSION=1.13.9.5456-ecd600442 
 ENV PLEX_PATH=/opt/plex/Application
 
 RUN mkdir -p ${PLEX_PATH} /tmp/plex \

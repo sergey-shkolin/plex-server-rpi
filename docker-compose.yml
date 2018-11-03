@@ -1,6 +1,6 @@
 plex-server:
   container_name: plex-server
-  image: plex-server-rpi:1.13.8.5395-10d48da0d
+  image: plex-media-server:1.13.8.5395-10d48da0d
   net: "host"
   restart: always
   volumes:
